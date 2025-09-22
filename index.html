@@ -1,41 +1,28 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Laberinto por giroscopio</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Laberinto con Giroscopio</title>
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-  <div class="app">
-    <header>
-      <h1>Laberinto: mueve la pelota con el celular</h1>
-      <div class="controls">
-        <label for="sizeSelect">Tamaño:</label>
-        <select id="sizeSelect">
-          <option value="10">10 x 10</option>
-          <option value="15" selected>15 x 15</option>
-          <option value="20">20 x 20</option>
-        </select>
-        <label for="speedRange">Sensibilidad:</label>
-        <input id="speedRange" type="range" min="0.2" max="2.0" step="0.1" value="1">
-        <button id="newMaze">Generar laberinto</button>
-      </div>
-    </header>
-
-    <main>
-      <canvas id="mazeCanvas"></canvas>
-      <div class="overlay">
-        <div id="status">Permite movimiento del dispositivo para empezar</div>
-        <div id="finish" class="hidden">¡Llegaste! 🎉</div>
-      </div>
-    </main>
-
-    <footer>
-      <small>Controles alternativos: flechas del teclado / arrastra en pantalla.</small>
-    </footer>
+  <h1>Laberinto con Giroscopio</h1>
+  
+  <div id="ui">
+    <button id="startButton">🎮 Iniciar Juego</button>
+    <label for="mazeSize">Tamaño:</label>
+    <select id="mazeSize">
+      <option value="10">10x10</option>
+      <option value="15">15x15</option>
+      <option value="20">20x20</option>
+    </select>
+    <label for="sensitivity">Sensibilidad:</label>
+    <input type="range" id="sensitivity" min="1" max="10" value="5">
   </div>
 
+  <canvas id="mazeCanvas" width="500" height="500"></canvas>
+  
   <script src="script.js"></script>
 </body>
 </html>
