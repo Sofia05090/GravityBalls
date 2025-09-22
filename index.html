@@ -1,12 +1,41 @@
-<html lang="en">
+<!doctype html>
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GravityBalls</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Laberinto por giroscopio</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <br/>
-    <h1>Pronto GravityBalls</h1>
+  <div class="app">
+    <header>
+      <h1>Laberinto: mueve la pelota con el celular</h1>
+      <div class="controls">
+        <label for="sizeSelect">Tamaño:</label>
+        <select id="sizeSelect">
+          <option value="10">10 x 10</option>
+          <option value="15" selected>15 x 15</option>
+          <option value="20">20 x 20</option>
+        </select>
+        <label for="speedRange">Sensibilidad:</label>
+        <input id="speedRange" type="range" min="0.2" max="2.0" step="0.1" value="1">
+        <button id="newMaze">Generar laberinto</button>
+      </div>
+    </header>
+
+    <main>
+      <canvas id="mazeCanvas"></canvas>
+      <div class="overlay">
+        <div id="status">Permite movimiento del dispositivo para empezar</div>
+        <div id="finish" class="hidden">¡Llegaste! 🎉</div>
+      </div>
+    </main>
+
+    <footer>
+      <small>Controles alternativos: flechas del teclado / arrastra en pantalla.</small>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
