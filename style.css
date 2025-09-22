@@ -1,20 +1,67 @@
+/* Estilo base */
 body {
   font-family: Arial, sans-serif;
   text-align: center;
   background: #222;
   color: #fff;
+  margin: 0;
+  padding: 15px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
+/* Título */
 h1 {
-  margin-top: 10px;
+  margin: 10px 0;
+  font-size: clamp(1.2rem, 3vw, 2rem);
 }
 
+/* Controles */
 #ui {
-  margin: 15px;
+  margin: 10px 0 20px 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
 }
 
-canvas {
+#ui label {
+  font-size: 0.9rem;
+}
+
+/* Botón */
+button {
+  background: #ff4444;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+button:hover {
+  background: #ff6666;
+}
+
+/* Canvas */
+#canvasWrapper {
+  width: 100%;
+  max-width: 600px; /* límite para que no crezca demasiado en PC */
+  aspect-ratio: 1 / 1; /* mantiene cuadrado */
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+#mazeCanvas {
+  width: 100%;
+  height: 100%;
+  display: block;
   border: 3px solid #fff;
   background: #000;
+  border-radius: 10px;
 }
+
 

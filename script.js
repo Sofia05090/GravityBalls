@@ -9,7 +9,16 @@ let maze, cellSize, player, goal;
 let dx = 0, dy = 0;
 let sensitivity = 5;
 
-// Laberinto con backtracking
+// Ajustar el canvas al tamaño del contenedor
+function resizeCanvas() {
+  const wrapper = document.getElementById("canvasWrapper");
+  canvas.width = wrapper.clientWidth;
+  canvas.height = wrapper.clientHeight;
+}
+window.addEventListener("resize", resizeCanvas);
+resizeCanvas();
+
+// ====== Generación del laberinto (igual que antes) ======
 function generateMaze(size) {
   let maze = [];
   for (let i = 0; i < size; i++) {
@@ -18,18 +27,15 @@ function generateMaze(size) {
       maze[i][j] = { visited: false, top: true, right: true, bottom: true, left: true };
     }
   }
-
   function carve(x, y) {
     maze[x][y].visited = true;
     let dirs = ["up","right","down","left"].sort(()=>Math.random()-0.5);
-
     for (let dir of dirs) {
       let nx = x, ny = y;
       if (dir === "up") nx--;
       if (dir === "down") nx++;
       if (dir === "left") ny--;
       if (dir === "right") ny++;
-
       if (nx >= 0 && ny >= 0 && nx < size && ny < size && !maze[nx][ny].visited) {
         if (dir === "up") { maze[x][y].top = false; maze[nx][ny].bottom = false; }
         if (dir === "down") { maze[x][y].bottom = false; maze[nx][ny].top = false; }
@@ -78,7 +84,6 @@ function updatePlayer() {
   let i = Math.floor(player.y / cellSize);
   let j = Math.floor(player.x / cellSize);
 
-  // Colisiones
   if (dy < 0 && maze[i][j].top && player.y - cellSize/4 <= i*cellSize) dy = 0;
   if (dy > 0 && maze[i][j].bottom && player.y + cellSize/4 >= (i+1)*cellSize) dy = 0;
   if (dx < 0 && maze[i][j].left && player.x - cellSize/4 <= j*cellSize) dx = 0;
@@ -87,7 +92,6 @@ function updatePlayer() {
   player.x = Math.max(cellSize/4, Math.min(canvas.width - cellSize/4, nextX));
   player.y = Math.max(cellSize/4, Math.min(canvas.height - cellSize/4, nextY));
 
-  // Ganar
   if (Math.floor(player.x/cellSize) === goal.x && Math.floor(player.y/cellSize) === goal.y) {
     alert("¡Ganaste!");
     startGame();
@@ -101,6 +105,7 @@ function gameLoop() {
 }
 
 function startGame() {
+  resizeCanvas();
   const size = parseInt(mazeSizeSelect.value);
   maze = generateMaze(size);
   cellSize = canvas.width / size;
@@ -111,13 +116,12 @@ function startGame() {
   drawMaze();
 }
 
-// === Movimiento por giroscopio ===
+// === Giroscopio ===
 function enableGyroscope() {
   if (typeof DeviceOrientationEvent !== "undefined" && typeof DeviceOrientationEvent.requestPermission === "function") {
-    // iOS
     DeviceOrientationEvent.requestPermission()
-      .then(permissionState => {
-        if (permissionState === "granted") {
+      .then(state => {
+        if (state === "granted") {
           window.addEventListener("deviceorientation", handleOrientation);
         } else {
           alert("Se necesita permiso para usar el giroscopio.");
@@ -125,17 +129,16 @@ function enableGyroscope() {
       })
       .catch(console.error);
   } else {
-    // Android y otros
     window.addEventListener("deviceorientation", handleOrientation);
   }
 }
 
 function handleOrientation(event) {
-  dx = event.gamma / 10; // izquierda-derecha
-  dy = event.beta / 10;  // adelante-atrás
+  dx = event.gamma / 10;
+  dy = event.beta / 10;
 }
 
-// Botón de inicio
+// Iniciar
 startButton.addEventListener("click", () => {
   enableGyroscope();
   startGame();
